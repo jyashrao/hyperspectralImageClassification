@@ -11,7 +11,7 @@
 
 The base paper proposes an unsupervised band selection approach combining dual partitioning, wavelet entropy ranking, 1D recursive spatial filtering, and a standard 3D-CNN. While reporting high numerical accuracies ($>97\%$), deep scrutiny reveals significant theoretical limitations, mathematical inconsistencies, redundancy collapse, and severe spatial data leakage risks.
 
-Our project introduces a **Next-Generation End-to-End Differentiable & Anti-Collinear Band Selection Framework (Res-SSAN)** that resolves every core limitation identified in the base paper.
+Our project introduces a **Next-Generation End-to-End Differentiable & Anti-Collinear Band Selection Framework (ASSAN)** that resolves every core limitation identified in the base paper.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -26,7 +26,7 @@ Our project introduces a **Next-Generation End-to-End Differentiable & Anti-Coll
 │ OUR IMPROVED FRAMEWORK:                                                                │
 │   Raw HSI ──> [Differentiable Gumbel-Softmax Selector] ──> [Adaptive Guided Filter]    │
 │                        ▲                                             │                 │
-│                        │       [Res-SSAN: 3D Conv + Spectral SE + 2D ResNet]           │
+│                        │       [ASSAN: 3D Conv + Spectral SE + 2D ResNet]           │
 │                        │                                             │                 │
 │                        └────── Backpropagation (L_CE + L_Repulse + L_MSD + L_Sparse) ──┘
 │   * Unified end-to-end gradient optimization with anti-collinearity constraints.       │
@@ -109,7 +109,7 @@ $$H_{\text{filtered}} = H_{\text{selected}} \odot \mathcal{G}_{\theta}(H_{\text{
 
 where $\mathcal{G}_{\theta}$ is a lightweight convolutional guidance net outputting values in $[0, 1]$, and $\mathcal{R}_{\phi}$ is a depthwise separable spatial refiner. This adaptively smooths intra-class noise while preserving crisp boundary transitions.
 
-### 3.4 Spectral-Spatial Attention Residual Network (Res-SSAN)
+### 3.4 Spectral-Spatial Attention Residual Network (ASSAN)
 Our classifier backbone features:
 1. **Volumetric 3D Convolution:** Captures low-level spatial-spectral interactions.
 2. **Spectral Squeeze-and-Excitation (SE):** Recalibrates channel-wise feature responses by modeling inter-band dependencies.
@@ -121,7 +121,7 @@ Our classifier backbone features:
 
 ## 4. Architectural Comparison Matrix
 
-| Component / Feature | Base Paper (Kumar et al., 2024) | Our Enhanced Model (Res-SSAN) | Improvement Impact |
+| Component / Feature | Base Paper (Kumar et al., 2024) | Our Enhanced Model (ASSAN) | Improvement Impact |
 | :--- | :--- | :--- | :--- |
 | **Band Selection Paradigm** | Unsupervised, two-stage heuristic | End-to-end task-aware differentiable | Optimal for target class discrimination |
 | **Threshold Tuning** | Manually fixed ($\tau=0.6$, window=5) | Self-learned via gradient descent | Fully automated, zero hyperparameter guessing |
@@ -142,7 +142,7 @@ Our classifier backbone features:
 * `src/models/diff_band_selector.py`: Our Differentiable Gumbel-Softmax band selector with temperature decay.
 * `src/models/anti_collinearity.py`: Our Anti-Collinearity Repulsion Loss and Mean Spectral Divergence optimizer.
 * `src/models/adaptive_guided_filter.py`: Our Learnable Bilateral Spatial Guided Filter.
-* `src/models/spectral_spatial_backbone.py`: Our full Res-SSAN network architecture.
+* `src/models/spectral_spatial_backbone.py`: Our full ASSAN network architecture.
 * `src/utils/metrics.py`: Standardized calculation of OA, AA, Kappa, MSD, Entropy, and Contiguity index.
 * `src/utils/visualization.py`: Spectral band distribution plots, correlation heatmaps, and classification maps.
 * `experiments/run_comparison.py`: Automated benchmarking and evaluation harness.

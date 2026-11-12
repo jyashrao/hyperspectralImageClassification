@@ -6,7 +6,7 @@ Comprehensive Comparative Benchmark & Experimental Suite.
 Executes:
 1. Base Paper Pipeline: Dual Partition + Recursive Filter + Base 3D-CNN.
 2. Our Enhanced Pipeline: Differentiable Band Selector + Anti-Collinearity Loss +
-                          Adaptive Guided Filter + Res-SSAN Backbone.
+                          Adaptive Guided Filter + ASSAN Backbone.
 3. Spatial Block Cross-Validation vs. Random Pixel Split (Revealing Data Leakage).
 4. Generates quantitative comparison tables (OA, AA, Kappa, MSD, Entropy, Contiguity).
 5. Produces publication-ready figures in figures/.
@@ -117,7 +117,7 @@ def train_baseline_pipeline(cube, gt, train_idx, test_idx, target_bands=15, epoc
 
 def train_enhanced_pipeline(cube, gt, train_idx, test_idx, target_bands=15, epochs=15, batch_size=64, lr=2e-3, device='cpu'):
     print("\n" + "="*60)
-    print(">>> RUNNING OUR ENHANCED PIPELINE (Differentiable + Anti-Collinear + Res-SSAN)")
+    print(">>> RUNNING OUR ENHANCED PIPELINE (Differentiable + Anti-Collinear + ASSAN)")
     print("="*60)
 
     H, W, total_bands = cube.shape
@@ -151,7 +151,7 @@ def train_enhanced_pipeline(cube, gt, train_idx, test_idx, target_bands=15, epoc
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    print(f"[*] Training End-to-End Res-SSAN for {epochs} epochs...")
+    print(f"[*] Training End-to-End ASSAN for {epochs} epochs...")
     model.train()
     for ep in range(epochs):
         total_loss = 0.0

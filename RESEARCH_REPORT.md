@@ -16,14 +16,14 @@ In this investigation, we conduct an exhaustive technical audit of Kumar et al.'
 3. **Mathematical Inconsistencies:** The published paper contains several formulation and typographical errors, including a distorted wavelet dilation formula and an inverted description of the Hughes phenomenon.
 4. **Spatial Data Leakage:** Conventional random pixel partitioning allows spatial patch overlap between training and testing sets, artificially inflating reported accuracies to near 100%.
 
-To overcome these limitations, we introduce **Res-SSAN** (Residual Spectral-Spatial Attention Network with Differentiable Band Selection). Our architecture incorporates:
+To overcome these limitations, we introduce **ASSAN** (Residual Spectral-Spatial Attention Network with Differentiable Band Selection). Our architecture incorporates:
 1. An **End-to-End Differentiable Gumbel-Softmax Band Selector** with temperature annealing, allowing continuous gradient backpropagation directly from classification loss to spectral selection logits.
 2. An explicit **Anti-Collinearity Repulsion Loss ($\mathcal{L}_{\text{repulse}}$)** that penalizes joint selection of spectrally proximate, highly correlated channels, mathematically eliminating contiguous band traps.
 3. A **Deep Learnable Bilateral Spatial Guided Filter** that adaptively preserves land-cover boundaries while attenuating sensor noise.
 4. A high-capacity **Spectral-Spatial Attention Residual Backbone** combining 3D volumetric convolutions, Squeeze-and-Excitation channel attention, and 2D spatial residual connections.
 5. A **Disjoint Spatial Block Cross-Validation Protocol** that guarantees zero patch overlap.
 
-Our experimental results demonstrate that Res-SSAN achieves superior spectral divergence, reduces inter-band correlation by up to **42%**, completely eliminates contiguous band redundancy ($0$ contiguous pairs vs. $7$ in the base paper), and maintains robust geographic generalizability on unseen terrain.
+Our experimental results demonstrate that ASSAN achieves superior spectral divergence, reduces inter-band correlation by up to **42%**, completely eliminates contiguous band redundancy ($0$ contiguous pairs vs. $7$ in the base paper), and maintains robust geographic generalizability on unseen terrain.
 
 ---
 
@@ -75,13 +75,13 @@ The test patch geographically overlaps with the training patch, effectively allo
 
 ---
 
-## 3. Our Proposed Framework: Res-SSAN
+## 3. Our Proposed Framework: ASSAN
 
-To systematically overcome these challenges, we developed the **Residual Spectral-Spatial Attention Network with Differentiable Band Selection (Res-SSAN)**.
+To systematically overcome these challenges, we developed the **Residual Spectral-Spatial Attention Network with Differentiable Band Selection (ASSAN)**.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│                             Res-SSAN FULL PIPELINE                               │
+│                             ASSAN FULL PIPELINE                               │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │ Input Patch X ∈ R^(B × H × W)                                                    │
 │    │                                                                             │
@@ -132,7 +132,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}}(\hat{y}, y) + \alpha \cdo
 
 ### 4.1 Quantitative Comparison on Benchmark Datasets
 
-| Evaluation Metric | Base Paper Model (Kumar et al.) | Our Enhanced Model (Res-SSAN) | Improvement Delta |
+| Evaluation Metric | Base Paper Model (Kumar et al.) | Our Enhanced Model (ASSAN) | Improvement Delta |
 | :--- | :---: | :---: | :---: |
 | **Band Selection Strategy** | Unsupervised Heuristic ($\tau=0.6$) | End-to-End Differentiable Gumbel | **Task-Aware Gradient Guided** |
 | **Contiguous Adjacent Band Pairs** | **7 pairs (Salinas)** | **0 pairs** | **100% Elimination of Contiguity Bug** |
@@ -149,7 +149,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}}(\hat{y}, y) + \alpha \cdo
 2. **Mean Spectral Divergence (MSD):**  
    Our model achieves an MSD of **58.74**, significantly outperforming the base paper's $42.40$. This mathematically confirms that our selected channels possess higher mutual dissimilarity and minimal informational overlap.
 3. **Data Leakage & Geographic Generalization:**  
-   Under the strict **Spatial Block Cross-Validation** protocol (where the model is evaluated on geographically disjoint regions), the base paper's shallow 3D-CNN struggles ($46.00\%$ OA). In contrast, our Res-SSAN architecture demonstrates vastly superior feature abstraction, achieving **68.45% OA** on unseen terrain, proving that our model learns generalized land-cover representations rather than memorizing spatial neighborhoods.
+   Under the strict **Spatial Block Cross-Validation** protocol (where the model is evaluated on geographically disjoint regions), the base paper's shallow 3D-CNN struggles ($46.00\%$ OA). In contrast, our ASSAN architecture demonstrates vastly superior feature abstraction, achieving **68.45% OA** on unseen terrain, proving that our model learns generalized land-cover representations rather than memorizing spatial neighborhoods.
 
 ---
 
@@ -177,7 +177,7 @@ Label scarcity remains a critical challenge in remote sensing. A high-priority f
 
 ### 6.3 Hardware Acceleration & Onboard Spaceborne Deployment
 Modern spaceborne platforms (e.g., EnMAP, PRISMA, NASA's EMIT on the ISS) produce continuous data streams requiring onboard downlink compression:
-- Quantize the Res-SSAN architecture to **INT8 / FP8 precision** using TensorRT or OpenVINO.
+- Quantize the ASSAN architecture to **INT8 / FP8 precision** using TensorRT or OpenVINO.
 - Implement the differentiable band selector on reconfigurable **FPGA (Xilinx Zynq UltraScale+)** or low-power edge NPUs to select informative bands directly at the sensor focal plane, reducing satellite transmission bandwidth by $>90\%$.
 
 ### 6.4 Cross-Sensor Domain Adaptation
@@ -189,6 +189,6 @@ Evaluating the transferability of band selection masks across different sensor m
 
 ## 7. Conclusion
 
-This project successfully audited, reproduced, and significantly advanced the hyperspectral band selection methodology described in Kumar et al. (2024). By identifying the root causes of the Salinas contiguity failure, mathematical errors, and spatial data leakage, we developed the **Res-SSAN** framework. Res-SSAN unifies end-to-end differentiable band selection, anti-collinearity repulsion loss, learnable spatial guided filtering, and residual spectral-spatial attention. 
+This project successfully audited, reproduced, and significantly advanced the hyperspectral band selection methodology described in Kumar et al. (2024). By identifying the root causes of the Salinas contiguity failure, mathematical errors, and spatial data leakage, we developed the **ASSAN** framework. ASSAN unifies end-to-end differentiable band selection, anti-collinearity repulsion loss, learnable spatial guided filtering, and residual spectral-spatial attention. 
 
 The resulting codebase, experimental suite, and documentation deliver a reproducible, mathematically sound, and publication-ready foundation for next-generation hyperspectral remote sensing classification.

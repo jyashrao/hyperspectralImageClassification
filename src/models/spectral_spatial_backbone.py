@@ -1,7 +1,7 @@
 """
 spectral_spatial_backbone.py
 ============================
-State-of-the-Art Residual Spectral-Spatial Attention Network (Res-SSAN).
+State-of-the-Art Residual Spectral-Spatial Attention Network (ASSAN).
 Unifies Differentiable Band Selection, Spatial Guided Filtering, and Deep Classification.
 """
 

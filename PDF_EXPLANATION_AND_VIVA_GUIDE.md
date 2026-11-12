@@ -60,7 +60,7 @@ If you are explaining your project to someone who has never heard of remote sens
 
 ---
 
-### 6. Box 1: Our 3 Simple Engineering Fixes (The Res-SSAN Framework)
+### 6. Box 1: Our 3 Simple Engineering Fixes (The ASSAN Framework)
 1. **The Anti-Duplicate Penalty (Anti-Collinearity Rule):**  
    We added a mathematical penalty rule to the AI training loss. If the AI tries to pick two bands that are close together and similar, it gets penalized! This strictly forces the AI to spread its picks across the whole spectrum (Visible, NIR, and SWIR).
 2. **Connected AI (End-to-End Differentiable):**  
@@ -72,12 +72,12 @@ If you are explaining your project to someone who has never heard of remote sens
 
 ### 7. Comparison Table: Base Paper vs. Our Model
 
-| Feature | Base Paper (Kumar et al., 2024) | Our Enhanced Model (Res-SSAN) | Why It Matters |
+| Feature | Base Paper (Kumar et al., 2024) | Our Enhanced Model (ASSAN) | Why It Matters |
 | :--- | :--- | :--- | :--- |
 | **Band Selection** | Manual guess ($\tau = 0.60$) | AI-guided (learns automatically) | No guesswork; adapts to any camera. |
 | **Duplicate Bands** | Picks 7 adjacent bands in Salinas! | **ZERO adjacent bands picked!** | No wasted satellite bandwidth or RAM. |
 | **Band Spread** | Clumped into a tiny corner ($1\text{--}21$) | Evenly spreads across $1$ to $199$ | Covers visible light, NIR, and SWIR. |
-| **AI Network** | Old 3-layer basic 3D-CNN | Res-SSAN (3D Conv + Attention) | Higher accuracy; handles complex crops. |
+| **AI Network** | Old 3-layer basic 3D-CNN | ASSAN (3D Conv + Attention) | Higher accuracy; handles complex crops. |
 | **Fair Testing** | Random pixels (leaks answers) | Separate spatial ground blocks | Proves it works on new, unseen land. |
 
 ---

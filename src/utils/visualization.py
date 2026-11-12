@@ -116,7 +116,7 @@ def plot_classification_maps(gt, base_pred_map, our_pred_map, dataset_name="Indi
 
     # Our Model Prediction
     axes[2].imshow(our_pred_map, cmap=cmap)
-    axes[2].set_title('Our Enhanced Model Prediction\n(Res-SSAN + Diff Band Selector)', fontsize=12, fontweight='bold')
+    axes[2].set_title('Our Enhanced Model Prediction\n(ASSAN + Diff Band Selector)', fontsize=12, fontweight='bold')
     axes[2].axis('off')
 
     plt.tight_layout()

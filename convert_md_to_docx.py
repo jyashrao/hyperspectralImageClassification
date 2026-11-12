@@ -2,7 +2,7 @@
 convert_md_to_docx.py
 =====================
 Converts the Beginner's Guide & Viva Walkthrough markdown into a professionally
-formatted Microsoft Word document (.docx).
+formatted Microsoft Word document (.docx). Uses ASSAN naming throughout.
 """
 
 import os
@@ -10,8 +10,8 @@ import docx
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import nsdecls, qn
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
 
 
 def set_cell_background(cell, fill_hex):
@@ -46,7 +46,6 @@ def add_callout_box(doc, title, text, bg_color="F1F5F9", border_color="1E3A8A"):
     set_cell_background(cell, bg_color)
     set_cell_margins(cell, top=140, bottom=140, left=200, right=200)
 
-    # Set thick left border and none for others
     tcPr = cell._tc.get_or_add_tcPr()
     tcBorders = parse_xml(f'''
         <w:tcBorders {nsdecls("w")}>
@@ -99,7 +98,7 @@ def create_document():
 
     p_sub = doc.add_paragraph()
     p_sub.paragraph_format.space_after = Pt(14)
-    r_sub = p_sub.add_run("Companion Guide to 2-Page Executive Summary PDF & Defense Cheat-Sheet")
+    r_sub = p_sub.add_run("Companion Guide to 2-Page Executive Summary PDF & Defense Cheat-Sheet (ASSAN Framework)")
     r_sub.font.name = "Calibri"
     r_sub.font.size = Pt(12)
     r_sub.font.color.rgb = RGBColor(15, 118, 110)  # Teal
@@ -196,7 +195,7 @@ def create_document():
     h2_p2.runs[0].font.color.rgb = RGBColor(15, 118, 110)
 
     # Box 1: Our 3 Core Engineering Fixes
-    h3_fix = doc.add_heading("1. Box 1: Our 3 Simple Engineering Fixes (The Res-SSAN Framework)", level=2)
+    h3_fix = doc.add_heading("1. Box 1: Our 3 Simple Engineering Fixes (The ASSAN Framework)", level=2)
     h3_fix.runs[0].font.color.rgb = RGBColor(30, 58, 138)
 
     doc.add_paragraph("1. The Anti-Duplicate Penalty (Anti-Collinearity Rule): We added a mathematical penalty rule to the AI training loss. If the AI tries to pick two bands that are close together and similar, it gets penalized! This strictly forces the AI to spread its picks across the whole spectrum (Visible, NIR, and SWIR).")
@@ -212,7 +211,7 @@ def create_document():
     tbl.autofit = False
 
     col_widths = [Inches(1.3), Inches(1.8), Inches(1.9), Inches(1.5)]
-    headers = ["Feature", "Base Paper (Kumar et al.)", "Our Enhanced Model", "Why It Matters"]
+    headers = ["Feature", "Base Paper (Kumar et al.)", "Our Enhanced Model (ASSAN)", "Why It Matters"]
 
     # Format Header Row
     hdr_cells = tbl.rows[0].cells
@@ -232,7 +231,7 @@ def create_document():
         ("Band Selection", "Manual guess (tau = 0.60)", "AI-guided (learns automatically)", "No guesswork; adapts to any camera."),
         ("Duplicate Bands", "Picks 7 adjacent bands in Salinas!", "ZERO adjacent bands picked!", "No wasted satellite bandwidth or RAM."),
         ("Band Spread", "Clumped into a tiny corner (1-21)", "Evenly spreads across 1 to 199", "Covers visible light, NIR, and SWIR."),
-        ("AI Network", "Old 3-layer basic 3D-CNN", "Res-SSAN (3D Conv + Attention)", "Higher accuracy, handles complex crops."),
+        ("AI Network", "Old 3-layer basic 3D-CNN", "ASSAN (3D Conv + Attention)", "Higher accuracy, handles complex crops."),
         ("Fair Testing", "Random pixels (leaks answers)", "Separate spatial ground blocks", "Proves it works on new, unseen land.")
     ]
 
@@ -287,20 +286,22 @@ def create_document():
     )
     add_callout_box(doc, "60-SECOND VIVA SPEECH (MEMORIZE OR READ THIS)", viva_speech, bg_color="EEF2FF", border_color="6366F1")
 
-    # Output path
+    # Output paths (saves to both normal and ASSAN named file)
     out_dir = r"C:\Users\jyash\Downloads\KUNAL HYPERSPECTRAL PROJECT"
     os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, "Beginners_Guide_and_Viva_Walkthrough.docx")
-    doc.save(out_path)
-    print(f"[+] Successfully created Word document: {out_path}")
+    
+    # Always save the ASSAN-titled docx
+    assan_path = os.path.join(out_dir, "Beginners_Guide_and_Viva_Walkthrough_ASSAN.docx")
+    doc.save(assan_path)
+    print(f"[+] Successfully created Word document: {assan_path}")
 
-    # Also copy the PDF file into the same directory so Kunal has both together
-    src_pdf = r"C:\Users\jyash\Desktop\hyperspectralImageClassification\Project_Summary_2_Page.pdf"
-    dst_pdf = os.path.join(out_dir, "Project_Summary_2_Page.pdf")
-    if os.path.exists(src_pdf):
-        import shutil
-        shutil.copyfile(src_pdf, dst_pdf)
-        print(f"[+] Also copied 2-Page PDF into: {dst_pdf}")
+    # Try saving to the primary docx if unlocked
+    primary_path = os.path.join(out_dir, "Beginners_Guide_and_Viva_Walkthrough.docx")
+    try:
+        doc.save(primary_path)
+        print(f"[+] Successfully updated primary Word document: {primary_path}")
+    except PermissionError:
+        print(f"[*] Note: Primary file is currently open in Word. Updated version is in {os.path.basename(assan_path)}")
 
 
 if __name__ == "__main__":

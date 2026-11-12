@@ -154,7 +154,7 @@ def build_pdf():
     pdf.set_xy(18, 19.5)
     pdf.set_font('Helvetica', '', 7.8)
     pdf.set_text_color(204, 251, 241)
-    pdf.cell(174, 4, 'The Res-SSAN Framework: Zero Duplicate Bands, 5.2x More Diversity, and Fair Testing', align='L')
+    pdf.cell(174, 4, 'The ASSAN Framework: Zero Duplicate Bands, 5.2x More Diversity, and Fair Testing', align='L')
 
     # 2. Box 1: Our 3 Core Smart Fixes (y: 28 to 72)
     pdf.set_fill_color(240, 253, 250)  # Very light teal
@@ -202,7 +202,7 @@ def build_pdf():
         ("Band Selection", "Manual guess (tau = 0.60)", "AI-guided (learns automatically)", "No guessing; adapts to any camera."),
         ("Duplicate Bands", "Picks 7 adjacent bands in Salinas!", "ZERO adjacent bands picked!", "No wasted bandwidth or memory."),
         ("Band Spread", "Clumped into a tiny corner (1-21)", "Evenly spreads across 1 to 199", "Covers visible light, NIR, and SWIR."),
-        ("AI Network", "Old 3-layer basic 3D-CNN", "Res-SSAN (3D Conv + Attention)", "Higher accuracy, handles complex crops."),
+        ("AI Network", "Old 3-layer basic 3D-CNN", "ASSAN (3D Conv + Attention)", "Higher accuracy, handles complex crops."),
         ("Fair Testing", "Random pixels (leaks answers)", "Separate spatial ground blocks", "Proves it works on new, unseen land.")
     ]
 

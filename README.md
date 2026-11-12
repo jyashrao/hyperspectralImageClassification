@@ -12,7 +12,7 @@ A research-grade PyTorch implementation reproducing and critically enhancing the
 1. **End-to-End Differentiable Band Selection:** Replaces the decoupled, unsupervised Pearson correlation threshold heuristic ($\tau = 0.6$) with a task-aware Gumbel-Softmax band selector optimized directly via gradient descent.
 2. **Anti-Collinearity Repulsion Loss ($\mathcal{L}_{\text{repulse}}$):** Resolves the base paper's Salinas anomaly (where 7 adjacent contiguous bands $146\text{--}152$ were selected) by mathematically penalizing joint activation of spectrally proximate, correlated bands.
 3. **Deep Learnable Bilateral Spatial Guided Filter:** Upgrades the static 1D recursive domain filter into an adaptive, texture-preserving spatial feature refiner.
-4. **Residual Spectral-Spatial Attention Network (Res-SSAN):** Replaces the rudimentary 3-layer 3D-CNN with a high-capacity hybrid architecture combining volumetric convolutions, channel-wise Squeeze-and-Excitation attention, and spatial residual blocks.
+4. **Residual Spectral-Spatial Attention Network (ASSAN):** Replaces the rudimentary 3-layer 3D-CNN with a high-capacity hybrid architecture combining volumetric convolutions, channel-wise Squeeze-and-Excitation attention, and spatial residual blocks.
 5. **Leakage-Free Spatial Block Cross-Validation:** Demonstrates true geographic generalizability by separating train and test zones into disjoint spatial blocks, preventing patch-overlap data leakage.
 
 ---
@@ -32,7 +32,7 @@ hyperspectralImageClassification/
 │   │   ├── diff_band_selector.py   # OURS: Differentiable Gumbel-Softmax band selector
 │   │   ├── anti_collinearity.py    # OURS: Anti-Collinearity repulsion loss & MSD loss
 │   │   ├── adaptive_guided_filter.py # OURS: Learnable bilateral spatial feature enhancer
-│   │   └── spectral_spatial_backbone.py # OURS: Res-SSAN end-to-end classifier
+│   │   └── spectral_spatial_backbone.py # OURS: ASSAN end-to-end classifier
 │   └── utils/
 │       ├── metrics.py              # OA, AA, Kappa, Mean Spectral Divergence (MSD), Entropy, Redundancy
 │       └── visualization.py        # Publication-grade figures (band distribution, heatmaps, maps)

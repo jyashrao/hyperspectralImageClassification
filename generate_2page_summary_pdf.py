@@ -46,7 +46,7 @@ def build_pdf():
     pdf.set_xy(14, 18)
     pdf.set_font('Helvetica', '', 9.5)
     pdf.set_text_color(210, 225, 245)
-    pdf.cell(182, 5, 'Executive Project Summary: Critique of Kumar et al. (2024) and Our Enhanced Res-SSAN Framework', ln=True, align='L')
+    pdf.cell(182, 5, 'Executive Project Summary: Critique of Kumar et al. (2024) and Our Enhanced ASSAN Framework', ln=True, align='L')
 
     pdf.set_xy(14, 24)
     pdf.set_font('Helvetica', 'I', 8)
@@ -136,7 +136,7 @@ def build_pdf():
     pdf.set_xy(12, 153)
     pdf.set_font('Helvetica', 'B', 11)
     pdf.set_text_color(24, 43, 73)
-    pdf.cell(186, 6, '3. SYSTEM ARCHITECTURE: BASE PAPER vs. OUR ENHANCED Res-SSAN', ln=True)
+    pdf.cell(186, 6, '3. SYSTEM ARCHITECTURE: BASE PAPER vs. OUR ENHANCED ASSAN', ln=True)
     pdf.set_draw_color(24, 43, 73)
     pdf.line(12, 159, 198, 159)
 
@@ -170,7 +170,7 @@ def build_pdf():
     pdf.set_xy(111, 164)
     pdf.set_font('Helvetica', 'B', 8.5)
     pdf.set_text_color(13, 148, 136)
-    pdf.cell(85, 4.5, 'OUR ENHANCED Res-SSAN (2026)', ln=True, align='C')
+    pdf.cell(85, 4.5, 'OUR ENHANCED ASSAN (2026)', ln=True, align='C')
     pdf.set_font('Helvetica', '', 7.6)
     pdf.set_text_color(60, 60, 60)
     pdf.set_xy(111, 170)
@@ -180,7 +180,7 @@ def build_pdf():
         "3. Anti-Collinearity Loss: Exponential repulsion\n"
         "4. Diversity Loss: Directly maximizes MSD\n"
         "5. Adaptive Guided Filter: Deep learnable bilateral\n"
-        "6. Classifier: Res-SSAN (3D Conv + SE + 2D ResNet)\n"
+        "6. Classifier: ASSAN (3D Conv + SE + 2D ResNet)\n"
         "-> Result: ZERO contiguous bands, 5.2x higher MSD!"
     )
     pdf.multi_cell(85, 4.2, our_flow)
@@ -226,7 +226,7 @@ def build_pdf():
     # Table Header
     y_tbl = 35
     col_w = [34, 48, 54, 50]
-    headers = ["Component", "Base Paper (Kumar et al.)", "Our Enhanced Model (Res-SSAN)", "Why It Matters / Impact"]
+    headers = ["Component", "Base Paper (Kumar et al.)", "Our Enhanced Model (ASSAN)", "Why It Matters / Impact"]
 
     pdf.set_fill_color(30, 58, 138)  # Blue Header
     pdf.rect(12, y_tbl, 186, 6, 'F')
@@ -245,7 +245,7 @@ def build_pdf():
         ("Parameter Tuning", "Manually fixed (tau=0.6, window=5, level=3)", "Self-learned continuous logits via gradient descent", "Zero trial-and-error guessing; fully adaptive."),
         ("Redundancy Control", "None: Picks 7 contiguous bands (Salinas 146-152)", "Anti-Collinearity Repulsion Loss (L_repulse)", "Zero contiguous bands; uniformly spans visible to SWIR."),
         ("Spatial Filtering", "Static 1D recursive domain filter (fixed weights)", "Deep Learnable Bilateral Spatial Guided Filter", "Dynamic texture-preserving; removes noise & shadows."),
-        ("Classifier Backbone", "Basic 3-layer 3D-CNN (conv, maxpool, dense)", "Res-SSAN (3D Conv + Channel SE + 2D ResNet)", "Higher capacity, residual learning, prevents collapse."),
+        ("Classifier Backbone", "Basic 3-layer 3D-CNN (conv, maxpool, dense)", "ASSAN (3D Conv + Channel SE + 2D ResNet)", "Higher capacity, residual learning, prevents collapse."),
         ("Validation Protocol", "Random pixel split (Severe spatial data leakage)", "Disjoint Spatial Block Cross-Validation", "Proves real-world out-of-distribution generalization.")
     ]
 
